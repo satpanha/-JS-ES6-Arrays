@@ -21,6 +21,10 @@ const SHOPPING_CART = [
 function getCartTotalAmount() {
   let result = 0;
   // Write your code here
+  for ( const item of SHOPPING_CART) {
+    let product = PRODUCTS.find((p)=> p.id ===item.id);
+    result+= product.price * item.quantity;
+  }
   return result;
 }
 
@@ -37,6 +41,16 @@ function getCartTotalAmount() {
  */
 function addProductToCart(productId) {
   // Write your code here
+  let exitingProduct = SHOPPING_CART.find((s) => s.id === productId);
+
+  if (exitingProduct){
+    exitingProduct.quantity++;
+  }else {
+    SHOPPING_CART.push({
+      id : productId,
+      quantity : 1 
+    })
+  }
 }
 
 /**
@@ -55,6 +69,15 @@ function addProductToCart(productId) {
  */
 function removeProductFromCart(productId) {
   // Write your code here
+  let index = SHOPPING_CART.findIndex((s) => s.id === productId);
+
+  if (index === -1) return ;
+
+  if (SHOPPING_CART[index].quantity > 1 ){
+    SHOPPING_CART[index].quantity--;
+  }else {
+    SHOPPING_CART.splice(index, 1);
+  }
 }
 
 // --------------------------------------------------------
@@ -72,10 +95,10 @@ console.log(JSON.stringify(SHOPPING_CART)); //  Shoud be    [{"id":1,"quantity":
 addProductToCart(2);
 console.log(JSON.stringify(SHOPPING_CART)); //  Shoud be    [{"id":1,"quantity":3},{"id":3,"quantity":1},{"id":2,"quantity":1}]
 
-// test 4  -
+// // test 4  -
 removeProductFromCart(1);
 console.log(JSON.stringify(SHOPPING_CART)); //  Shoud be    [{"id":1,"quantity":2},{"id":3,"quantity":1},{"id":2,"quantity":1}]
 
-// test 5  -
+// // test 5  -
 removeProductFromCart(2);
 console.log(JSON.stringify(SHOPPING_CART)); //  Shoud be    [{"id":1,"quantity":2},{"id":3,"quantity":1}]

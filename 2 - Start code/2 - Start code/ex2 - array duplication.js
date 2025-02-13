@@ -17,15 +17,31 @@ const STUDENTS_DATA = [
  * @param {string} firstName - the student first name
  * @param {age} newAge  - the student new age
  */
-function updateStudentAge(firstName, newAge) {
-  let student = STUDENTS_DATA.find((s) => s.firstName === firstName);
-  if (student) {
-    student.age = newAge;
-  }
+function addStudentListName(lastName, batch) {
+  // add lastName and batch into student_data
+  STUDENTS_DATA.forEach((s) => {
+    s.lastName = lastName;
+    s.batch = batch;
+  });
 }
 
-// 1 - Update An age to 30
-updateStudentAge("An", 30);
+function updateStudentAge(firstName,lastName, batch, newAge) {
+  let student = STUDENTS_DATA.find(
+    (s) => 
+      s.firstName === firstName &&
+      s.lastName === lastName &&
+      s.batch === batch
+   );
+  if (student) {
+    student.age = newAge;
+    return true;
+  }
+  return false;
+}
+addStudentListName("kak", 1);
 
+console.log(JSON.stringify(STUDENTS_DATA));
+// 1 - Update An age to 30
+updateStudentAge("An","kak", 1, 30);
 // 2 - Print the updated data
 console.log(JSON.stringify(STUDENTS_DATA));
